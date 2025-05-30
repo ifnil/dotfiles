@@ -1,0 +1,103 @@
+{
+  "layer": "top",
+  "position": "left",
+
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["cava"],
+  "modules-right": [
+    "tray",
+    "wireplumber",
+    "bluetooth",
+    "idle_inhibitor",
+    "battery",
+    "clock",
+    "group/date",
+  ],
+
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "width": 10,
+    "format-window-separator": "",
+    "window-rewrite-default": "",
+    "window-rewrite": {
+      "empty": "",
+      "class<.*>": "",
+    },
+    "format-icons": {
+      "empty": "",
+      "persistent": "",
+      "special": "",
+      "active": "",
+      "default": "",
+    },
+  },
+
+  "wireplumber": {
+    "format": "{volume}% {icon}",
+    "format-muted": "",
+    "on-click": "helvum",
+    "format-icons": ["", "", ""],
+  },
+
+  "bluetooth": {
+    // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
+    "format": " {status}",
+    "format-disabled": "", // an empty format will hide the module
+    "format-connected": " {num_connections}",
+    "tooltip-format": "{controller_alias}\t{controller_address}",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+  },
+
+  "idle_inhibitor": {
+    "format": "{icon}",
+    "format-icons": {
+      "activated": "",
+      "deactivated": "",
+    },
+    "on-click": "hyprctl dispatch exec hypridle",
+    "tooltip": "fix me",
+  },
+
+  "tray": {
+    "spacing": 20,
+  },
+
+  "battery": {
+    "bat": "BAT0",
+    "interval": 60,
+    "states": {
+      "warning": 30,
+      "critical": 15,
+    },
+    "format": "{capacity}%",
+    "format-icons": ["", "", "", "", ""],
+    "max-length": 25,
+  },
+
+  "clock": {
+    "format": "{:%H:%M\n%d %b}",
+    "format-alt": "{:%A, %B %d, %Y (%R)}  ",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "year",
+      "mode-mon-col": 3,
+      "weeks-pos": "right",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#ffead3'><b>{}</b></span>",
+        "days": "<span color='#ecc6d9'><b>{}</b></span>",
+        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>",
+      },
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-scroll-up": "tz_up",
+      "on-scroll-down": "tz_down",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down",
+    },
+  },
+}

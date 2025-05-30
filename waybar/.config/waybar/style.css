@@ -1,0 +1,45 @@
+@import "./default.css";
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#power-profiles-daemon,
+#mpd,
+#bluetooth,
+#workspaces button {
+  padding: 8px;
+  margin: 5px;
+  background-color: rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  color: white;
+  box-shadow: inset 2px 3px 3px rgba(0, 0, 0, 0.25);
+}
+
+#workspaces button {
+  padding: 5px;
+  box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.5);
+}
+
+#workspaces button.active {
+  box-shadow: inset 2px 3px 3px rgba(0, 0, 0, 0.5);
+}
+
+#battery.charging {
+  background-color: #436f31;
+}
+
+#idle_inhibitor {
+  font-size: 14px;
+}
