@@ -1,8 +1,6 @@
-{ config, pkgs, ... }:
-let
-  gtk_theme = "Arc-Dark";
-in
-{
+{ pkgs, ... }:
+let gtk_theme = "Arc-Dark";
+in {
   imports = [
     ./programs/zsh.nix
     ./programs/tmux.nix
@@ -27,6 +25,9 @@ in
       nerd-fonts.hurmit
       nerd-fonts.terminess-ttf
       nerd-fonts.symbols-only
+
+      hyprshade
+      hyprshot
     ];
 
     stateVersion = "25.05";

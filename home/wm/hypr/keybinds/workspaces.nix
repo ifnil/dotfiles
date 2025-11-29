@@ -11,22 +11,26 @@ let
   numToKey = n: if n == 10 then "0" else toString n;
 
   # Functional helper to generate workspace bindings
-  mkWorkspaceBinds =
-    action: map (n: "${mod}, ${numToKey n}, ${action}, ${toString n}") workspaceNumbers;
+  mkWorkspaceBinds = action:
+    map (n: "${mod}, ${numToKey n}, ${action}, ${toString n}") workspaceNumbers;
 
   # Functional helper to generate move-to-workspace bindings
-  mkMoveToWorkspaceBinds =
-    action: map (n: "${mod} SHIFT, ${numToKey n}, ${action}, ${toString n}") workspaceNumbers;
+  mkMoveToWorkspaceSilentBinds = action:
+    map (n: "${mod} SHIFT, ${numToKey n}, ${action}, ${toString n}")
+    workspaceNumbers;
 
-in
-{
+  mkMoveToWorkspaceBinds = action:
+    map (n: "${mod} Control_L, ${numToKey n}, ${action}, ${toString n}")
+    workspaceNumbers;
+
+in {
   wayland.windowManager.hyprland.settings = {
     bind =
       # Switch to workspace N
-      (mkWorkspaceBinds "workspace")
-      ++
+      (mkWorkspaceBinds "workspace") ++
 
-        # Move active window to workspace N (silently, without switching)
-        (mkMoveToWorkspaceBinds "movetoworkspacesilent");
+      # Move active window to workspace N (silently, without switching)
+      (mkMoveToWorkspaceSilentBinds "movetoworkspacesilent")
+      ++ (mkMoveToWorkspaceBinds "movetoworkspace");
   };
 }
