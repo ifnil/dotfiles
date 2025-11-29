@@ -17,7 +17,7 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, pinecone, ... }:
+  outputs = { nixpkgs, home-manager, myim, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
