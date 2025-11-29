@@ -20,6 +20,7 @@
         ssh = "kitten ssh";
         setwall = "swww img";
         jq = "jq -C";
+        mkdir = "mkdir -p";
       };
     };
 
