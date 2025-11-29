@@ -5,12 +5,7 @@ let
 
   # Functional helper to create directional bindings
   # Creates bindings for both arrow keys and vim-style hjkl
-  mkDirectionalBinds =
-    {
-      modifiers,
-      action,
-      command,
-    }:
+  mkDirectionalBinds = { modifiers, action, command, }:
     let
       directions = {
         arrows = {
@@ -59,19 +54,13 @@ let
         };
       };
 
-      mkBind =
-        {
-          key,
-          dir,
-          comment,
-        }:
+      mkBind = { key, dir, comment, }:
         "${modifiers}, ${key}, ${action}, ${dir}";
-    in
-    (map mkBind (lib.attrValues directions.arrows)) ++ (map mkBind (lib.attrValues directions.vim));
+    in (map mkBind (lib.attrValues directions.arrows))
+    ++ (map mkBind (lib.attrValues directions.vim));
 
   # Helper for monitor workspace movement
-  mkMonitorBinds =
-    { modifiers }:
+  mkMonitorBinds = { modifiers }:
     let
       directions = [
         {
@@ -92,42 +81,36 @@ let
         }
       ];
 
-      mkBind = { key, dir }: "${modifiers}, ${key}, movecurrentworkspacetomonitor, ${dir}";
-    in
-    map mkBind directions;
+      mkBind = { key, dir }:
+        "${modifiers}, ${key}, movecurrentworkspacetomonitor, ${dir}";
+    in map mkBind directions;
 
-in
-{
+in {
   wayland.windowManager.hyprland.settings = {
     bind =
       # Window focus navigation (hy3 plugin)
       (mkDirectionalBinds {
         modifiers = mod;
-        action = "hy3:movefocus";
+        action = "movefocus";
         command = "";
-      })
-      ++
+      }) ++
 
-        # Window movement
-        (mkDirectionalBinds {
-          modifiers = "${mod} SHIFT";
-          action = "hy3:movewindow";
-          command = "";
-        })
-      ++
+      # Window movement
+      (mkDirectionalBinds {
+        modifiers = "${mod} SHIFT";
+        action = "movewindow";
+        command = "";
+      }) ++
 
-        # Move workspace to another monitor
-        (mkMonitorBinds {
-          modifiers = "${mod} ALT";
-        })
-      ++
+      # Move workspace to another monitor
+      (mkMonitorBinds { modifiers = "${mod} ALT"; }) ++
 
-        # Window management actions
-        [
-          "${mod}, W, togglegroup"
-          "${mod}, E, togglesplit"
-          "${mod}, F, fullscreen"
-          "${mod} SHIFT, space, togglefloating"
-        ];
+      # Window management actions
+      [
+        "${mod}, W, togglegroup"
+        "${mod}, E, togglesplit"
+        "${mod}, F, fullscreen"
+        "${mod} SHIFT, space, togglefloating"
+      ];
   };
 }

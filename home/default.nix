@@ -1,18 +1,16 @@
-{ pkgs, ... }:
-let gtk_theme = "Arc-Dark";
-in {
+{ pkgs, ... }: {
   imports = [
+    ./programs/waybar.nix
     ./programs/zsh.nix
     ./programs/tmux.nix
     ./programs/yazi.nix
-    ./programs/waybar.nix
-
-    ./wm
   ];
 
   home = {
     username = "june";
     homeDirectory = "/home/june";
+    sessionPath = [ "~/.cargo/bin" "~/go/bin" "~/.local/bin" ];
+    sessionVariables = { EDITOR = "nvim"; };
 
     packages = with pkgs; [
       cowsay
@@ -25,9 +23,6 @@ in {
       nerd-fonts.hurmit
       nerd-fonts.terminess-ttf
       nerd-fonts.symbols-only
-
-      hyprshade
-      hyprshot
     ];
 
     stateVersion = "25.05";
@@ -37,7 +32,7 @@ in {
     enable = true;
     theme = {
       package = pkgs.arc-theme;
-      name = gtk_theme;
+      name = "Arc-Dark";
     };
 
     font = {

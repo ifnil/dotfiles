@@ -1,5 +1,6 @@
 {
-  description = "An empty flake template that you can adapt to your own environment";
+  description =
+    "An empty flake template that you can adapt to your own environment";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs";
@@ -10,19 +11,15 @@
     };
   };
 
-  outputs =
-    { nixpkgs, home-manager, ... }:
+  outputs = { nixpkgs, home-manager, ... }:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-    in
-    {
+    in {
       homeConfigurations."june" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
-        modules = [
-          ./home
-        ];
+        modules = [ ./home ];
       };
     };
 }

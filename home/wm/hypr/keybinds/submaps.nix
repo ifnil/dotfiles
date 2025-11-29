@@ -5,52 +5,31 @@ let
 
   # Functional helper to create submap bindings
   # A submap is a modal keybinding system (like vim modes)
-  mkSubmap =
-    {
-      name,
-      triggers,
-      bindings,
-      exitKeys ? [
-        "escape"
-        "enter"
-      ],
-    }:
+  mkSubmap = { name, triggers, bindings, exitKeys ? [ "escape" "enter" ], }:
     let
       # Create trigger bindings to enter the submap
-      triggerBinds = map (
-        {
-          key,
-          comment ? "",
-        }:
-        "${key}, submap, ${name}" + lib.optionalString (comment != "") "   # ${comment}"
-      ) triggers;
+      triggerBinds = map ({ key, comment ? "", }:
+        "${key}, submap, ${name}"
+        + lib.optionalString (comment != "") "   # ${comment}") triggers;
 
       # Create bindings within the submap
-      submapBinds = map (
-        {
-          key,
-          type ? "bind",
-          action,
-          command,
-          comment ? "",
-          resetAfter ? false,
-        }:
+      submapBinds = map ({ key, type ? "bind", action, command, comment ? ""
+        , resetAfter ? false, }:
         let
           binding = "${type} = , ${key}, ${action}, ${command}";
-          withComment = binding + lib.optionalString (comment != "") "   # ${comment}";
+          withComment = binding
+            + lib.optionalString (comment != "") "   # ${comment}";
           # If resetAfter is true, also add a reset binding after the action
-          resetBinding = lib.optional resetAfter "${type} = , ${key}, exec, reset";
-        in
-        [ withComment ] ++ resetBinding
-      ) bindings;
+          resetBinding =
+            lib.optional resetAfter "${type} = , ${key}, exec, reset";
+        in [ withComment ] ++ resetBinding) bindings;
 
       # Create exit bindings
       exitBinds = map (key: "bind = , ${key}, submap, reset") exitKeys;
 
       # Flatten all bindings and wrap in submap declaration
       allBinds = lib.flatten submapBinds ++ exitBinds;
-    in
-    {
+    in {
       triggers = triggerBinds;
       submap = [ "submap = ${name}" ] ++ allBinds ++ [ "submap = reset" ];
     };
@@ -58,12 +37,10 @@ let
   # Define resize submap
   resizeSubmap = mkSubmap {
     name = "resize";
-    triggers = [
-      {
-        key = "${mod}, R";
-        comment = "Enter resize mode";
-      }
-    ];
+    triggers = [{
+      key = "${mod}, R";
+      comment = "Enter resize mode";
+    }];
     bindings = [
       {
         key = "h";
@@ -99,12 +76,10 @@ let
   # Define power/machine control submap
   powerSubmap = mkSubmap {
     name = "machine_ctl";
-    triggers = [
-      {
-        key = "${mod} SHIFT, E";
-        comment = "Enter power menu";
-      }
-    ];
+    triggers = [{
+      key = "${mod} SHIFT, E";
+      comment = "Enter power menu";
+    }];
     bindings = [
       {
         key = "e";
@@ -152,30 +127,22 @@ let
   # Define screenshot submap
   screenshotSubmap = mkSubmap {
     name = "screenshot";
-    triggers = [
-      {
-        key = "ALT&Shift_L, 4";
-        comment = "Enter screenshot mode";
-      }
-    ];
-    bindings = [
-      {
-        key = "p";
-        type = "binde";
-        action = "exec";
-        command = "hyprshot -m region";
-        comment = "Screenshot region";
-        resetAfter = true;
-      }
-    ];
+    triggers = [{
+      key = "ALT&Shift_L, 4";
+      comment = "Enter screenshot mode";
+    }];
+    bindings = [{
+      key = "p";
+      type = "binde";
+      action = "exec";
+      command = "hyprshot -m region";
+      comment = "Screenshot region";
+      resetAfter = true;
+    }];
   };
 
   # Collect all submaps
-  allSubmaps = [
-    resizeSubmap
-    powerSubmap
-    screenshotSubmap
-  ];
+  allSubmaps = [ resizeSubmap powerSubmap screenshotSubmap ];
 
   # Extract all trigger bindings
   allTriggers = lib.flatten (map (s: s.triggers) allSubmaps);
@@ -183,8 +150,7 @@ let
   # Extract and format all submap definitions
   allSubmapDefinitions = lib.flatten (map (s: s.submap) allSubmaps);
 
-in
-{
+in {
   wayland.windowManager.hyprland = {
     settings = {
       # Bindings to trigger submaps

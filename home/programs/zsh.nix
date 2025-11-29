@@ -10,9 +10,9 @@
       historySubstringSearch.enable = true;
 
       oh-my-zsh.enable = true;
-      oh-my-zsh.plugins = [
-        "git"
-      ];
+      oh-my-zsh.plugins = [ "git" "ssh-agent" ];
+
+      history = { ignoreDups = true; };
 
       shellAliases = {
         lsl = "ls -al";
