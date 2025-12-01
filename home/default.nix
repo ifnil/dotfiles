@@ -1,6 +1,5 @@
 { pkgs, ... }: {
   imports = [
-    ./programs/waybar.nix
     ./programs/zsh.nix
     ./programs/tmux.nix
     ./programs/yazi.nix

@@ -21,7 +21,7 @@
     "flake-parts_2": {
       "inputs": {
         "nixpkgs-lib": [
-          "pinecone",
+          "myim",
           "nixvim",
           "nixpkgs"
         ]
@@ -81,13 +81,13 @@
     "ixx": {
       "inputs": {
         "flake-utils": [
-          "pinecone",
+          "myim",
           "nixvim",
           "nuschtosSearch",
           "flake-utils"
         ],
         "nixpkgs": [
-          "pinecone",
+          "myim",
           "nixvim",
           "nuschtosSearch",
           "nixpkgs"
@@ -108,17 +108,36 @@
         "type": "github"
       }
     },
+    "myim": {
+      "inputs": {
+        "flake-parts": "flake-parts",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixvim": "nixvim"
+      },
+      "locked": {
+        "lastModified": 1764470943,
+        "narHash": "sha256-FgEVTKUuqilgQT5rvp4u4S8FjoU62CUJi0cBBOVEogU=",
+        "path": "/home/june/git/myim",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/june/git/myim",
+        "type": "path"
+      }
+    },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1764384123,
-        "narHash": "sha256-UoliURDJFaOolycBZYrjzd9Cc66zULEyHqGFH3QHEq0=",
-        "owner": "nixos",
+        "lastModified": 1764230294,
+        "narHash": "sha256-Z63xl5Scj3Y/zRBPAWq1eT68n2wBWGCIEF4waZ0bQBE=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "59b6c96beacc898566c9be1052ae806f3835f87d",
+        "rev": "0d59e0290eefe0f12512043842d7096c4070f30e",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
+        "owner": "NixOS",
         "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
@@ -141,15 +160,15 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1764230294,
-        "narHash": "sha256-Z63xl5Scj3Y/zRBPAWq1eT68n2wBWGCIEF4waZ0bQBE=",
-        "owner": "NixOS",
+        "lastModified": 1764445028,
+        "narHash": "sha256-ik6H/0Zl+qHYDKTXFPpzuVHSZE+uvVz2XQuQd1IVXzo=",
+        "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "0d59e0290eefe0f12512043842d7096c4070f30e",
+        "rev": "a09378c0108815dbf3961a0e085936f4146ec415",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
+        "owner": "nixos",
         "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
         "type": "github"
@@ -158,7 +177,7 @@
     "nixvim": {
       "inputs": {
         "flake-parts": "flake-parts_2",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs",
         "nuschtosSearch": "nuschtosSearch",
         "systems": "systems_2"
       },
@@ -181,7 +200,7 @@
         "flake-utils": "flake-utils",
         "ixx": "ixx",
         "nixpkgs": [
-          "pinecone",
+          "myim",
           "nixvim",
           "nixpkgs"
         ]
@@ -200,30 +219,11 @@
         "type": "github"
       }
     },
-    "pinecone": {
-      "inputs": {
-        "flake-parts": "flake-parts",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "nixvim": "nixvim"
-      },
-      "locked": {
-        "lastModified": 1764446947,
-        "narHash": "sha256-/rfkbZD/jMtnTbyxAAXK4cBmrsGIdDXV+CB5vgkrqSI=",
-        "path": "/home/june/git/pinecone",
-        "type": "path"
-      },
-      "original": {
-        "path": "/home/june/git/pinecone",
-        "type": "path"
-      }
-    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs",
-        "pinecone": "pinecone"
+        "myim": "myim",
+        "nixpkgs": "nixpkgs_2"
       }
     },
     "systems": {
