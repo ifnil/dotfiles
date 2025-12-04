@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }:
+{
   imports = [
     ./programs/zsh.nix
     ./programs/tmux.nix
@@ -6,15 +7,19 @@
   ];
 
   home = {
-    username = "june";
-    homeDirectory = "/home/june";
-    sessionPath = [ "~/.cargo/bin" "~/go/bin" "~/.local/bin" ];
-    sessionVariables = { EDITOR = "nvim"; };
+    sessionPath = [
+      "~/.cargo/bin"
+      "~/go/bin"
+      "~/.local/bin"
+    ];
+    sessionVariables = {
+      EDITOR = "nvim";
+    };
 
     packages = with pkgs; [
       cowsay
-      nemo
       git
+      signal-desktop-bin
 
       proggyfonts
       nerd-fonts.gohufont
@@ -27,7 +32,7 @@
     stateVersion = "25.05";
   };
 
-  gtk = {
+  gtk = lib.mkDefault {
     enable = true;
     theme = {
       package = pkgs.arc-theme;
@@ -41,5 +46,4 @@
   };
 
   programs.home-manager.enable = true;
-  services.ssh-agent.enable = true;
 }

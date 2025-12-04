@@ -1,6 +1,5 @@
 {
-  description =
-    "An empty flake template that you can adapt to your own environment";
+  description = "An empty flake template that you can adapt to your own environment";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
@@ -11,22 +10,60 @@
     };
 
     myim = {
-      url = "path:/home/june/git/myim";
-      # url = "github:ifnil/myim";
+      url = "github:ifnil/myim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { nixpkgs, home-manager, myim, ... }:
+  outputs =
+    { nixpkgs
+    , home-manager
+    , myim
+    , ...
+    }:
     let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
+      # Support multiple systems
+      systems = [
+        "x86_64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
+      ];
+
+      # Helper function to create configurations for each system
+      forEachSystem = f: nixpkgs.lib.genAttrs systems f;
+
+      # Create pkgs for each system
+      pkgsFor = forEachSystem (system: nixpkgs.legacyPackages.${system});
+    in
+    {
       homeConfigurations."june" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+        pkgs = pkgsFor.x86_64-linux;
 
         modules = [
-          ./home
+          ./hosts/linux
+          myim.homeModules.default
+        ];
+      };
+
+      homeConfigurations."work" = home-manager.lib.homeManagerConfiguration {
+        pkgs = pkgsFor.aarch64-darwin;
+
+        modules = [
+          (
+            { config
+            , lib
+            , pkgs
+            , ...
+            }:
+            {
+              nixpkgs.config.allowUnfreePredicate =
+                pkg:
+                builtins.elem (lib.getName pkg) [
+                  "signal-desktop-bin"
+                ];
+            }
+          )
+          ./home/hosts/work.nix
           myim.homeModules.default
         ];
       };

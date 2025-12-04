@@ -29,8 +29,8 @@
 
     extraConfig = ''
       set -g mouse            on 
-      set -g default-shell    /home/june/.nix-profile/bin/zsh
-      set -g default-command  /home/june/.nix-profile/bin/zsh
+      set -g default-shell    ~/.nix-profile/bin/zsh
+      set -g default-command  ~/.nix-profile/bin/zsh
       set -g renumber-windows on
     '';
   };
