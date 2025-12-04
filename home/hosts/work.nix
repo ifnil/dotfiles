@@ -9,6 +9,5 @@
     homeDirectory = "/Users/jlattanzi";
   };
 
-  # macOS-specific overrides
   gtk.enable = false; # GTK not typically needed on macOS
 }

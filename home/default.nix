@@ -19,6 +19,8 @@
     packages = with pkgs; [
       cowsay
       git
+      zig
+
       signal-desktop-bin
 
       proggyfonts
