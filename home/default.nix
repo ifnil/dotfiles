@@ -1,9 +1,8 @@
 { pkgs, lib, ... }:
 {
   imports = [
-    ./programs/zsh.nix
-    ./programs/tmux.nix
-    ./programs/yazi.nix
+    ./programs
+    ./wm
   ];
 
   home = {
@@ -20,8 +19,16 @@
       cowsay
       git
       zig
-
       signal-desktop-bin
+      claude-code
+      jq
+      gum
+
+      # Hyprland dependencies
+      waybar
+      swww
+      dunst
+      hyprpolkitagent
 
       proggyfonts
       nerd-fonts.gohufont
@@ -39,6 +46,11 @@
     theme = {
       package = pkgs.arc-theme;
       name = "Arc-Dark";
+    };
+
+    iconTheme = {
+      package = pkgs.arc-icon-theme;
+      name = "Arc";
     };
 
     font = {

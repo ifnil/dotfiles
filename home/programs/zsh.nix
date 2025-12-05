@@ -21,6 +21,7 @@
         setwall = "swww img";
         jq = "jq -C";
         mkdir = "mkdir -p";
+        rebuild = "sudo nixos-rebuild switch --flake /home/june/dotfiles#melon";
       };
     };
 

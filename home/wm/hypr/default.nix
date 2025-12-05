@@ -11,6 +11,17 @@
     settings = {
       "$mod" = "SUPER";
 
+      env = [
+        "ELECTRON_OZONE_PLATFORM_HINT,auto"
+        "NIXOS_OZONE_WL,1"
+        "LIBVA_DRIVER_NAME,nvidia"
+        "XDG_SESSION_TYPE,wayland"
+        "GBM_BACKEND,nvidia-drm"
+        "__GLX_VENDOR_LIBRARY_NAME,nvidia"
+        "WLR_NO_HARDWARE_CURSORS,1"
+        "NVD_BACKEND,direct"
+      ];
+
       exec-once = [
         "swww-daemon"
         "dunst"
@@ -40,8 +51,8 @@
       input = { kb_options = "caps:escape_shifted_capslock"; };
 
       decoration = {
-        rounding = 10;
-        rounding_power = 4;
+        # rounding = 10;
+        # rounding_power = 4;
         border_part_of_window = false;
 
         blur = {
@@ -56,6 +67,10 @@
       misc = {
         disable_hyprland_logo = true;
         font_family = "GohuFont uni 14 Nerd Font";
+      };
+
+      cursor = {
+        no_hardware_cursors = true;
       };
     };
   };

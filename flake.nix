@@ -22,7 +22,6 @@
     , ...
     }:
     let
-      # Support multiple systems
       systems = [
         "x86_64-linux"
         "aarch64-darwin"
@@ -33,22 +32,43 @@
       pkgsFor = forEachSystem (system: nixpkgs.legacyPackages.${system});
     in
     {
-      homeConfigurations."melon" = home-manager.lib.homeManagerConfiguration {
-        pkgs = pkgsFor.x86_64-linux;
-
+      nixosConfigurations."melon" = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
         modules = [
-          ./hosts/melon
-          myim.homeModules.default
+          ./hosts/melon/configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.june = import ./home/hosts/linux.nix;
+            home-manager.extraSpecialArgs = {
+              inherit myim;
+            };
+            home-manager.sharedModules = [
+              myim.homeModules.default
+            ];
+          }
         ];
       };
 
-      homeConfigurations."work" = home-manager.lib.homeManagerConfiguration {
-        pkgs = pkgsFor.aarch64-darwin;
+      homeConfigurations = {
+        "june" = home-manager.lib.homeManagerConfiguration {
+          pkgs = pkgsFor.x86_64-linux;
 
-        modules = [
-          ./home/hosts/work.nix
-          myim.homeModules.default
-        ];
+          modules = [
+            ./home/hosts/linux.nix
+            myim.homeModules.default
+          ];
+        };
+
+        "work" = home-manager.lib.homeManagerConfiguration {
+          pkgs = pkgsFor.aarch64-darwin;
+
+          modules = [
+            ./home/hosts/work.nix
+            myim.homeModules.default
+          ];
+        };
       };
     };
 }
